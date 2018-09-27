@@ -5,10 +5,13 @@ require('core/ini.php');
 
 
 <?php
+
+//Create Topic Object
+$topic = new Topic();
 //Get Template and assign vars
 $template = new Template('templates/frontpage.php');
 
 //Assign Vars
-$template->heading = 'This is the tempalte heading';
+$template->topics = $topic->getAllTopics();
 //Display template
 echo $template;

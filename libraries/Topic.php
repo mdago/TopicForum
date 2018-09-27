@@ -29,4 +29,35 @@ class Topic {
 
         return $results;
     }
+
+
+    /**
+     * Get Total # of topics
+     */
+     public function getTotalTopics(){
+
+        $this->db->query('SELECT * FROM topics');
+        $row = $this->db->resultset();
+        return $this->db->rowCount();
+     }
+
+     /**
+     * Get Total # of categories
+     */
+    public function getTotalCategories(){
+
+        $this->db->query('SELECT * FROM categories');
+        $row = $this->db->resultset();
+        return $this->db->rowCount();
+    }
+
+    /**
+     * Get Total # of replies
+     */
+    public function getTotalReplies($topicId){
+        
+        $this->db->query('SELECT * FROM replies WHERE topic_id= '. $topicId);
+        $row = $this->db->resultset();
+        return $this->db->rowCount();
+    }
 }

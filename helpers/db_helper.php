@@ -14,3 +14,14 @@ function replyCount($topic_id){
 
     return $db->rowCount();
 }
+
+/**
+ * get Categories
+ */
+function getCategories(){
+    $db = new Database;
+    $db->query('SELECT * FROM categories');
+
+    $results = $db->resultset();
+    return $results;
+}

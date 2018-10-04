@@ -2,6 +2,42 @@
 
 class User {
 
+    //Initialize the Database Variable
+    private $db;
+
+
+    /**
+     * Constructor
+     */
+    public function __construct(){
+        $this->db = new Database();
+    }
+
+/**
+ * 
+ * Register User
+ */
+    public function register($data){
+        //Inserting the query
+        $this->db->query('INSERT INTO users (name, email, avatar, username, password, about, last_activity) 
+                                            VALUES (:name, :email, :avatar, :username, :password, :about, :last_activity)');
+                                            
+        //Bind values
+        $this->db->bind(':name', $data['name']);
+        $this->db->bind(':email', $data['email']);
+        $this->db->bind(':avatar', $data['avatar']);
+        $this->db->bind(':username', $data['username']);
+        $this->db->bind(':password', $data['password']);
+        $this->db->bind(':about', $data['about']);
+        $this->db->bind(':last_activity', $data['last_activity']);
+
+        //Execute
+        if($this->db->execute()){
+            return true;
+        }else{
+            return false;
+        }
+    }
 /*
 * Upload User Avatar
  */
@@ -15,7 +51,7 @@ class User {
 				|| ($_FILES["avatar"]["type"] == "image/pjpeg")
 				|| ($_FILES["avatar"]["type"] == "image/x-png")
 				|| ($_FILES["avatar"]["type"] == "image/png"))
-				&& ($_FILES["avatar"]["size"] < 100000)
+				&& ($_FILES["avatar"]["size"] < 500000)
 				&& in_array($extension, $allowedExts)) {
 			if ($_FILES["avatar"]["error"] > 0) {
 				redirect('register.php', $_FILES["avatar"]["error"], 'error');

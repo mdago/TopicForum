@@ -53,6 +53,9 @@ class Topic {
 
     /**
      * Get Topics by Category
+     * @param $categoryId 
+     * @return $results 
+     * 
      */
     public function getByCategory($categoryId){
         $this->db->query("SELECT topics.*, categories.*, users.username, users.avatar FROM topics
@@ -69,6 +72,25 @@ class Topic {
 
         return $results;
     }
+
+    /*
+	 * Get Topics By Username
+	 */
+	public function getByUser($user_id){
+		$this->db->query("SELECT topics.*, categories.*, users.username, users.avatar FROM topics
+						INNER JOIN categories
+						ON topics.category_id = categories.id
+						INNER JOIN users
+						ON topics.user_id=users.id
+						WHERE topics.user_id = :user_id
+		");
+		$this->db->bind(':user_id', $user_id);
+	
+		//Assign Result Set
+		$results = $this->db->resultset();
+	
+		return $results;
+	}
 
     /**
      * Get Category by id
@@ -91,5 +113,35 @@ class Topic {
         $this->db->query('SELECT * FROM replies WHERE topic_id= '. $topicId);
         $row = $this->db->resultset();
         return $this->db->rowCount();
+    }
+
+
+    /**
+     * Get Topic by its Id
+     * 
+     */
+    public function getTopic($id){
+        $this->db->query('SELECT topics.*, users.username, users.avatar FROM topics
+                          INNER JOIN users on topics.user_id = users.id WHERE topics.id = :id  ');
+
+        $this->db->bind(':id', $id);
+
+        $row = $this->db->single();
+
+        return $row;
+    }
+
+    /**
+     * Get Topic Replies
+     */
+    public function getReplies($topicId){
+        $this->db->query('SELECT replies.*, users.* FROM replies INNER JOIN users ON
+                          replies.user_id = users.id WHERE replies.topic_id = :topicId ORDER BY create_date ASC');
+        
+        $this->db->bind(':topicId', $topicId);
+
+        $results = $this->db->resultset();
+        
+        return $results;
     }
 }

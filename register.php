@@ -21,7 +21,7 @@ if(isset($_POST['register'])){
     $data['email'] = $_POST['email'];
     $data['username'] = $_POST['username'];
     $data['password'] = md5($_POST['password']);
-    $data['password2'] = md5($_POST['passwod2']);
+    $data['password2'] = md5($_POST['password2']);
     $data['about'] = $_POST['about'];
     $data['last_activity'] = date("Y-m-d H:i:s");
 

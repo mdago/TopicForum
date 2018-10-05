@@ -5,7 +5,19 @@
 				<div class="sidebar">
 					<div class="block">
 						<h3>Login Form</h3>
-						<form role="form">
+						<?php if(isLoggedIn()) :?>
+
+						<div class="userdata">
+							Welcome, <?php echo getUser()['username'];?>
+						</div>
+
+						<br>
+						<form role="form" method="post" action="logout.php">
+							<input type="submit" name="do_logout" class="btn btn-primary" value="Logout" />
+						</form>
+
+						<?php else : ?>
+						<form role="form" method="post" action="login.php">
 						<div class="form-group">
 							<label>Username</label>
 							<input name="username" type="text" class="form-control" placeholder="Enter Username">
@@ -16,6 +28,7 @@
 						</div>			
 						<button name="do_login" type="submit" class="btn btn-primary">Login</button> <a  class="btn btn-default" href="register.html"> Create Account</a>
 					</form>
+						<?php endif;?>
 					</div>
 					
 					<div class="block">

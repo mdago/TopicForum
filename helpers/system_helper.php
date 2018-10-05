@@ -58,3 +58,27 @@ function displayMessage(){
 		echo '';
 	}
 }
+
+/**
+ * Check to see if the user is login
+ */
+function isLoggedIn(){
+    if(isset($_SESSION['is_logged_in'])){
+        return true;
+    }else{
+        return false;
+    }
+}
+
+/**
+ * 
+ * Get Logged In User Info
+ */
+function getUser(){
+    $userArray = array();
+    $userArray = $_SESSION['user_id'];
+    $userArray = $_SESSION['username'];
+    $userArray = $_SESSION['name'];
+
+    return $userArray;
+}

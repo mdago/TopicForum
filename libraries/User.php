@@ -84,11 +84,11 @@ class User {
         $this->db->bind(':password', $password);
 
         $row = $this->db->single();
-
+        echo var_dump($row);
         //Check if there is a row
         if($this->db->rowCount() > 0){
 
-            $this->setUserData(row);
+            $this->setUserData($row);
             return true;
         }else{
 
@@ -96,6 +96,19 @@ class User {
         }
     }
 
+    /**
+     * 
+     * Set User Data
+     * 
+     */
+    private function setUserData($row){
+
+        $_SESSION['is_logged_in'] = true;
+        $_SESSION['user_id'] = $row->id;
+        $_SESSION['username'] = $row->username;
+        $_SESSION['name'] = $row->name;
+
+    }
 
     /*
     *User Logout
@@ -118,17 +131,5 @@ class User {
         return $this->db->rowCount();
     }
 
-    /**
-     * 
-     * Set User Data
-     * 
-     */
-    private function setUserData($row){
-
-        $_SESSION['is_logged_in'] = true;
-        $_SESSION['user_id'] = $row->id;
-        $_SESSION['username'] = $row->username;
-        $_SESSION['name'] = $row->name;
-
-    }
+    
 }
